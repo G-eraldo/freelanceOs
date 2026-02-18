@@ -14,10 +14,14 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Encode filename for Content-Disposition (handles accents & special chars)
+    const safeFilename = attachment.filename.replace(/[^\x20-\x7E]/g, "_");
+    const encodedFilename = encodeURIComponent(attachment.filename);
+
     // Set headers for PDF viewing
     setResponseHeaders(event, {
       "Content-Type": attachment.mimeType,
-      "Content-Disposition": `inline; filename="${attachment.filename}"`,
+      "Content-Disposition": `inline; filename="${safeFilename}"; filename*=UTF-8''${encodedFilename}`,
       "Content-Length": attachment.content.length.toString(),
     });
 
