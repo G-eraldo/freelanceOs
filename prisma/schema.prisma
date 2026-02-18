@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Project {
+  id              String   @id @default(cuid())
+  client          String
+  name            String
+  amount          Float    @default(0)
+  date            String?  // Store as string to match existing frontend date handling
+  tags            String[] @default([])
+  
+  // PDF Attachments (Stored as IDs in the DB)
+  devisId         String?  @unique
+  devis           Attachment? @relation("ProjectDevis", fields: [devisId], references: [id])
+  
+  cgvId           String?  @unique
+  cgv             Attachment? @relation("ProjectCGV", fields: [cgvId], references: [id])
+  
+  hasMaintenance  Boolean  @default(false)
+  maintAmount     Float    @default(0)
+  maintDate       String?
+  notes           String   @default("")
+  
+  // Project Steps
+  sent            Boolean  @default(false)
+  signed          Boolean  @default(false)
+  deposit         Boolean  @default(false)
+  done            Boolean  @default(false)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Attachment {
+  id          String   @id @default(cuid())
+  filename    String
+  mimeType    String
+  content     Bytes    // The binary content of the PDF
+  createdAt   DateTime @default(now())
+
+  // Relations
+  projectDevis Project? @relation("ProjectDevis")
+  projectCGV   Project? @relation("ProjectCGV")
+}
