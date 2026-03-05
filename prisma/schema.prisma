@@ -50,3 +50,22 @@ model Attachment {
   projectDevis Project? @relation("ProjectDevis")
   projectCGV   Project? @relation("ProjectCGV")
 }
+
+model Credential {
+  id          String   @id @default(cuid())
+  label       String
+  category    String   @default("service")
+  clientName  String?
+  fields      CredentialField[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CredentialField {
+  id            String     @id @default(cuid())
+  credential    Credential @relation(fields: [credentialId], references: [id], onDelete: Cascade)
+  credentialId  String
+  key           String
+  value         String
+  isSecret      Boolean    @default(false)
+}

@@ -21,7 +21,7 @@
           <span class="icon w-4.5 text-center text-[16px]">{{ item.icon }}</span>
           {{ item.label }}
           <span v-if="item.id === 'maintenance' && hasMaintenanceNotif"
-            class="notif w-1.75 h-1.75 rounded-full bg-dashboard-red ml-1 animate-pulse"></span>
+            class="notif w-1.75 h-1.75 rounded-full bg-dashboard-red ml-1 animate-pulse" />
         </NuxtLink>
       </nav>
     </aside>
@@ -41,7 +41,7 @@
           <span class="mni-icon text-[20px] leading-none">{{ item.icon }}</span>
           <span>{{ item.mobileLabel || item.label }}</span>
           <span v-if="item.id === 'maintenance' && hasMaintenanceNotif"
-            class="mni-notif absolute top-1 right-2 w-1.75 h-1.75 rounded-full bg-dashboard-red animate-pulse"></span>
+            class="mni-notif absolute top-1 right-2 w-1.75 h-1.75 rounded-full bg-dashboard-red animate-pulse" />
         </NuxtLink>
       </div>
     </nav>
@@ -50,10 +50,11 @@
 
 <script setup>
 const navItems = [
-  { id: 'dashboard', to: '/', label: 'Vue d\'ensemble', mobileLabel: 'Accueil', icon: '◈' },
-  { id: 'projects', to: '/projects', label: 'Projets', mobileLabel: 'Projets', icon: '⬡' },
-  { id: 'maintenance', to: '/maintenance', label: 'Maintenances', mobileLabel: 'Maint.', icon: '⊙' },
-  { id: 'tax', to: '/tax', label: 'Calculateur Fiscal', mobileLabel: 'Fiscal', icon: '◎' },
+  { id: 'dashboard', to: '/', label: 'Vue d\'ensemble', mobileLabel: 'Accueil', icon: '🏠' },
+  { id: 'projects', to: '/projects', label: 'Projets', mobileLabel: 'Projets', icon: '📁' },
+  { id: 'maintenance', to: '/maintenance', label: 'Maintenances', mobileLabel: 'Maint.', icon: '🛠️' },
+  { id: 'tax', to: '/tax', label: 'Calculateur Fiscal', mobileLabel: 'Fiscal', icon: '💵' },
+  { id: 'vault', to: '/vault', label: 'Vault', mobileLabel: 'Vault', icon: '🔐' },
 ]
 
 // This will be replaced by actual logic from useProjects later
