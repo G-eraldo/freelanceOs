@@ -54,6 +54,7 @@ const navItems = [
   { id: 'projects', to: '/projects', label: 'Projets', mobileLabel: 'Projets', icon: '📁' },
   { id: 'maintenance', to: '/maintenance', label: 'Maintenances', mobileLabel: 'Maint.', icon: '🛠️' },
   { id: 'tax', to: '/tax', label: 'Calculateur Fiscal', mobileLabel: 'Fiscal', icon: '💵' },
+  { id: 'shortcuts', to: '/shortcuts', label: 'Raccourcis', mobileLabel: 'Raccourcis', icon: '⌘' },
   { id: 'vault', to: '/vault', label: 'Vault', mobileLabel: 'Vault', icon: '🔐' },
 ]
 

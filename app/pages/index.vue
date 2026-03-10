@@ -9,8 +9,9 @@
                     {{ today }}
                 </div>
             </div>
-            <button @click="isModalOpen = true; editingProject = null"
-                class="px-5 py-2.5 bg-dashboard-accent text-dashboard-bg rounded-lg text-sm font-bold hover:bg-[#6fffbe] -translate-y-px transition-all shadow-lg shadow-dashboard-accent/10">
+            <button
+                class="px-5 py-2.5 bg-dashboard-accent text-dashboard-bg rounded-lg text-sm font-bold hover:bg-[#6fffbe] -translate-y-px transition-all shadow-lg shadow-dashboard-accent/10"
+                @click="isModalOpen = true; editingProject = null">
                 + Nouveau projet
             </button>
         </div>
