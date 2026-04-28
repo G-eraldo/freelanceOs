@@ -1,4 +1,4 @@
-import { encrypt } from "~~/server/utils/crypto";
+import { encrypt, decrypt } from "~~/server/utils/crypto";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -19,5 +19,11 @@ export default defineEventHandler(async (event) => {
     include: { fields: true },
   });
 
-  return credential;
+  return {
+    ...credential,
+    fields: credential.fields.map((f) => ({
+      ...f,
+      value: f.isSecret ? "••••••••" : decrypt(f.value),
+    })),
+  };
 });

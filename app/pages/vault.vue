@@ -2,6 +2,7 @@
 import { toast } from 'vue-sonner'
 
 const { credentials, loading, loadCredentials, addCredential, deleteCredential, revealField } = useCredentials()
+const { projects, loadProjects } = useProjects()
 
 const showModal = ref(false)
 const revealedFields = ref({})
@@ -16,13 +17,19 @@ const newCred = ref({
     fields: [{ key: '', value: '', isSecret: false }]
 })
 
-onMounted(() => loadCredentials())
+onMounted(() => {
+    loadCredentials()
+    loadProjects()
+})
 
 const uniqueClients = computed(() => {
-    const clients = credentials.value
+    const credClients = credentials.value
         .map(c => c.clientName)
         .filter(name => !!name)
-    return [...new Set(clients)]
+    const projClients = projects.value
+        .map(p => p.client)
+        .filter(name => !!name)
+    return [...new Set([...credClients, ...projClients])].sort((a, b) => a.localeCompare(b))
 })
 
 const filteredCredentials = computed(() => {
@@ -220,8 +227,13 @@ const copyToClipboard = (text) => {
                             <label class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest ml-1">
                                 Nom du client
                             </label>
-                            <input v-model="newCred.clientName" placeholder="ML Motors..."
-                                class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400/50 text-white rounded-xl px-4 py-2.5 mt-1 text-sm outline-none transition-colors">
+                            <select v-model="newCred.clientName"
+                                class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400/50 text-white rounded-xl px-4 py-2.5 mt-1 cursor-pointer text-sm outline-none transition-colors">
+                                <option value="" disabled>Sélectionner un client...</option>
+                                <option v-for="client in uniqueClients" :key="client" :value="client">
+                                    {{ client }}
+                                </option>
+                            </select>
                         </div>
                     </div>
 
