@@ -10,7 +10,7 @@
           ⬡ FreelanceOS
         </div>
         <div class="logo-sub text-[11px] text-dashboard-muted mt-0.75 font-mono">
-          // Dashboard v1.0
+          // Dashboard v{{ appVersion }}
         </div>
       </div>
 
@@ -49,6 +49,10 @@
 </template>
 
 <script setup>
+import tauriConfig from '../../src-tauri/tauri.conf.json'
+
+const appVersion = tauriConfig.version
+
 const navItems = [
   { id: 'dashboard', to: '/', label: 'Vue d\'ensemble', mobileLabel: 'Accueil', icon: '🏠' },
   { id: 'projects', to: '/projects', label: 'Projets', mobileLabel: 'Projets', icon: '📁' },
