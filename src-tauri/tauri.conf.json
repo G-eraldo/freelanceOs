@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "freelanceOs",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "identifier": "fr.lafabriqueducode.app",
   "build": {
     "frontendDist": "https://freelance.lafabriqueducode.fr",
