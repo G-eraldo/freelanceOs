@@ -2,7 +2,6 @@
 import { toast } from 'vue-sonner'
 
 const { credentials, loading, loadCredentials, addCredential, deleteCredential, revealField } = useCredentials()
-const { projects, loadProjects } = useProjects()
 
 const showModal = ref(false)
 const revealedFields = ref({})
@@ -17,19 +16,13 @@ const newCred = ref({
     fields: [{ key: '', value: '', isSecret: false }]
 })
 
-onMounted(() => {
-    loadCredentials()
-    loadProjects()
-})
+onMounted(() => loadCredentials())
 
 const uniqueClients = computed(() => {
-    const credClients = credentials.value
+    const clients = credentials.value
         .map(c => c.clientName)
         .filter(name => !!name)
-    const projClients = projects.value
-        .map(p => p.client)
-        .filter(name => !!name)
-    return [...new Set([...credClients, ...projClients])].sort((a, b) => a.localeCompare(b))
+    return [...new Set(clients)]
 })
 
 const filteredCredentials = computed(() => {
@@ -111,14 +104,14 @@ const copyToClipboard = (text) => {
 
             <div class="flex gap-2">
                 <select v-model="selectedCategory"
-                    class="bg-zinc-900 border border-zinc-800 text-white rounded-xl px-4 py-2.5 text-sm outline-none cursor-pointer focus:border-emerald-400/50 transition-colors min-w-[140px]">
+                    class="bg-zinc-900 border border-zinc-800 text-white rounded-xl px-4 py-2.5 text-sm outline-none cursor-pointer focus:border-emerald-400/50 transition-colors min-w-35">
                     <option value="all">Toutes catégories</option>
                     <option value="service">Mon service</option>
                     <option value="client">Client</option>
                 </select>
 
                 <select v-model="selectedClient"
-                    class="bg-zinc-900 border border-zinc-800 text-white rounded-xl px-4 py-2.5 text-sm outline-none cursor-pointer focus:border-emerald-400/50 transition-colors min-w-[150px]">
+                    class="bg-zinc-900 border border-zinc-800 text-white rounded-xl px-4 py-2.5 text-sm outline-none cursor-pointer focus:border-emerald-400/50 transition-colors min-w-37.5">
                     <option value="all">Tous les clients</option>
                     <option v-for="client in uniqueClients" :key="client" :value="client">
                         {{ client }}
@@ -227,13 +220,8 @@ const copyToClipboard = (text) => {
                             <label class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest ml-1">
                                 Nom du client
                             </label>
-                            <select v-model="newCred.clientName"
-                                class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400/50 text-white rounded-xl px-4 py-2.5 mt-1 cursor-pointer text-sm outline-none transition-colors">
-                                <option value="" disabled>Sélectionner un client...</option>
-                                <option v-for="client in uniqueClients" :key="client" :value="client">
-                                    {{ client }}
-                                </option>
-                            </select>
+                            <input v-model="newCred.clientName" placeholder="ML Motors..."
+                                class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400/50 text-white rounded-xl px-4 py-2.5 mt-1 text-sm outline-none transition-colors">
                         </div>
                     </div>
 
